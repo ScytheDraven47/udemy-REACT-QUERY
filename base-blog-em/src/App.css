@@ -1,17 +1,27 @@
+:root {
+	--clr-font: hsl(0 0% 80%);
+	--clr-bg: hsl(0 0% 20%);
+}
+
+body {
+	background-color: var(--clr-bg);
+	color: var(--clr-font);
+}
+
 li {
-  margin-top: 8px;
+	margin-top: 8px;
 }
 
 li.post-title {
-  cursor: pointer;
+	cursor: pointer;
 }
 
 li.post-title:hover {
-  opacity: 0.6;
+	opacity: 0.6;
 }
 
 div.pages {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
 }
