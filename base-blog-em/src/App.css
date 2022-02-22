@@ -1,5 +1,6 @@
 :root {
 	--clr-font: hsl(0 0% 80%);
+	--clr-font-accent: hsl(0 0% 100%);
 	--clr-bg: hsl(0 0% 20%);
 }
 
@@ -24,4 +25,8 @@ div.pages {
 	display: flex;
 	justify-content: space-between;
 	width: 100%;
+}
+
+h3.post-title {
+	color: var(--clr-font-accent);
 }
