@@ -4,6 +4,16 @@
 	--clr-bg: hsl(0 0% 20%);
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+	color: var(--clr-font);
+}
+
 body {
 	background-color: var(--clr-bg);
 	color: var(--clr-font);
@@ -29,4 +39,14 @@ div.pages {
 
 h3.post-title {
 	color: var(--clr-font-accent);
+}
+
+.loading {
+	--clr-font: hsl(260 100% 70%);
+}
+.error {
+	--clr-font: hsl(0, 100%, 70%);
+}
+.success {
+	--clr-font: hsl(120, 100%, 70%);
 }
