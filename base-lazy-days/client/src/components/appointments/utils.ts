@@ -1,6 +1,10 @@
 import dayjs from 'dayjs';
 
-import type { Appointment, AppointmentDateMap } from '../../../../shared/types';
+import type {
+  Appointment,
+  AppointmentDateMap,
+  User,
+} from '../../../../shared/types';
 
 export function appointmentInPast(appointmentData: Appointment): boolean {
   const now = dayjs();
@@ -34,6 +38,7 @@ export function getAppointmentColor(
 
 export function getAvailableAppointments(
   appointments: AppointmentDateMap,
+  user: User,
 ): AppointmentDateMap {
   // clone so as not to mutate argument directly
   const filteredAppointments = { ...appointments };
