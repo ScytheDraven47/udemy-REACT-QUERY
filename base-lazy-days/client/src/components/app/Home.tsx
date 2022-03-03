@@ -3,10 +3,12 @@ import { ReactElement } from 'react';
 import { GiFlowerPot } from 'react-icons/gi';
 
 import { BackgroundImage } from '../common/BackgroundImage';
+import { usePrefetchStaff } from '../staff/hooks/useStaff';
 import { usePrefetchTreatments } from '../treatments/hooks/useTreatments';
 
 export function Home(): ReactElement {
   usePrefetchTreatments();
+  usePrefetchStaff();
 
   return (
     <Stack align="center" justify="center" height="84vh">

@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useState } from 'react';
-import { useQuery } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
 
 import type { Staff } from '../../../../../shared/types';
 import { axiosInstance } from '../../../axiosInstance';
@@ -26,4 +26,9 @@ export function useStaff(): UseStaff {
   const { data: staff = fallback } = useQuery(queryKeys.staff, getStaff);
 
   return { staff, filter, setFilter };
+}
+
+export function usePrefetchStaff(): void {
+  const queryClient = useQueryClient();
+  queryClient.prefetchQuery(queryKeys.staff, getStaff);
 }
