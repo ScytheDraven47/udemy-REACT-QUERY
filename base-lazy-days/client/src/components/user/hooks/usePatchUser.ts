@@ -1,5 +1,6 @@
 import jsonpatch from 'fast-json-patch';
-import { UseMutateFunction, useMutation } from 'react-query';
+import { UseMutateFunction, useMutation, useQueryClient } from 'react-query';
+import { queryKeys } from 'react-query/constants';
 
 import type { User } from '../../../../../shared/types';
 import { axiosInstance, getJWTHeader } from '../../../axiosInstance';
@@ -34,17 +35,45 @@ export function usePatchUser(): UseMutateFunction<
 > {
   const { user, updateUser } = useUser();
   const toast = useCustomToast();
+  const queryClient = useQueryClient();
 
   const { mutate: patchUser } = useMutation(
     (newUserData: User) => patchUserOnServer(newUserData, user),
     {
+      // onMutate returns context that is passed to onError
+      onMutate: async (newUserData: User | null) => {
+        // Cancel outgoing queries
+        queryClient.cancelQueries(queryKeys.user);
+
+        // Snapshot user data
+        const previousUserData: User = queryClient.getQueryData(queryKeys.user);
+
+        // Optimistically update cache
+        updateUser(newUserData);
+
+        // Return context
+        return { previousUserData };
+      },
+      onError: (error, newData, context) => {
+        // Rollback cache
+        if (context.previousUserData) {
+          updateUser(context.previousUserData);
+          toast({
+            title: 'Update failed; restoring previous values',
+            status: 'warning',
+          });
+        }
+      },
       onSuccess: (userData: User | null) => {
         if (!user) return;
-        updateUser(userData);
         toast({
           title: 'User updated!',
           status: 'success',
         });
+      },
+      onSettled: () => {
+        // Invalidate user query
+        queryClient.invalidateQueries(queryKeys.user);
       },
     },
   );
